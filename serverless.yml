@@ -1,0 +1,26 @@
+service: python-serverless-tenant-isolation
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: us-east-1
+  # you can add statements to the Lambda function's IAM Role here
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "sts:AssumeRole"
+      Resource: 
+        - "arn:aws:iam::#{AWS::AccountId}:role/DynamodbRoleToAssume"
+  environment:
+    ACCOUNT_ID: "#{AWS::AccountId}"
+
+functions:
+  hello:
+    handler: handler.handler
+    events:
+      - http:
+          path: /example/{tenant_id}
+          method: get
