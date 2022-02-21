@@ -3,6 +3,7 @@ import boto3
 import jwt
 
 account_id = os.getenv("ACCOUNT_ID")
+region = os.getenv("REGION")
 
 
 def generate_credentials(event):
@@ -40,8 +41,8 @@ def generate_dynamodb_policy(tenant_id):
             "Effect": "Allow",
             "Action": ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Query"],
             "Resource": [
-                f"arn:aws:dynamodb:<region>:<account-id>:table/OurTable",
-                f"arn:aws:dynamodb:<region>:<account-id>:table/OurTable/index/*",
+                f"arn:aws:dynamodb:{region}:{account_id}:table/OurTable",
+                f"arn:aws:dynamodb:{region}:{account_id}:table/OurTable/index/*",
             ],
             "Condition": {
                 "ForAllValues:StringLike": {
