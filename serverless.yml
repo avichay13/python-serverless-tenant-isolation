@@ -16,6 +16,7 @@ provider:
         - "arn:aws:iam::#{AWS::AccountId}:role/DynamodbRoleToAssume"
   environment:
     ACCOUNT_ID: "#{AWS::AccountId}"
+    REGION: "#{AWS::Region}"
 
 functions:
   hello:
